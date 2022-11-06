@@ -24,7 +24,6 @@ const MainPageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  border: 1px solid red;
 `;
 
 const LoginBtn = styled(Button)``;
