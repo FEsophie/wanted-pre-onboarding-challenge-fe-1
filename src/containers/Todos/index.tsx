@@ -41,7 +41,7 @@ const tempData = [
 
 function Todos() {
   const [showAddTodoModal, setShowAddTodoModal] = useState(false);
-  const [todoData, setTodoData] = useState<GetTodoRes[] | null>(tempData);
+  const [todoData, setTodoData] = useState<GetTodoRes[] | null>(null);
   const { data, isSuccess, isLoading, refetch } = useGetTodoList();
 
   function onClickAddTodoItem() {
@@ -62,7 +62,7 @@ function Todos() {
           <TodoListHead />
           {isLoading && isNil(todoData) ? (
             <li>불러오는 중....</li>
-          ) : !isSuccess ? (
+          ) : isSuccess ? (
             <>
               {todoData?.map((data) => {
                 return <TodoItem key={data.id} data={data} />;

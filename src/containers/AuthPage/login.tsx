@@ -13,13 +13,7 @@ import ButtonGroup from "../../components/ButtonGroup";
 import { useUserLogin } from "../../service/users/useUserService";
 import { FormGroup } from "./index";
 import { useNavigate } from "react-router-dom";
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
+import { useSetRecoilState } from "recoil";
 import { loginUser } from "../../module/atom";
 import { useToast } from "../../hooks/useToast";
 
@@ -81,7 +75,6 @@ function Login() {
       { email, password },
       {
         onSuccess(res) {
-          console.log("결과", res);
           localStorage.setItem("authToken", res.token);
           onSetUserEmail(email);
           toast("로그인 성공", { type: "success" });
