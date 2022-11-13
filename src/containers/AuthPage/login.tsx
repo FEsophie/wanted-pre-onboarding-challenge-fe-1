@@ -69,14 +69,13 @@ function Login() {
   }
 
   const fetchLoginMutation = useUserLogin();
+  const toast = useToast();
 
   function onSubmit() {
     const { emailInput, passwordInput } = inputGroupRef.current;
 
     const email = emailInput?.value || "";
     const password = passwordInput?.value || "";
-
-    const toast = useToast();
 
     fetchLoginMutation.mutate(
       { email, password },
