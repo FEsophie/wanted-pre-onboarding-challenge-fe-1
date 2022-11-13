@@ -1,4 +1,4 @@
-import validator from "utils/validator";
+import validator from "validator";
 
 export const loginValidator = (loginForm: {
   email: string;
