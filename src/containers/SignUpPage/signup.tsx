@@ -1,26 +1,14 @@
-import React, {
-  MutableRefObject,
-  RefObject,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
 import TextInput from "../../components/TextInput";
-import styled from "styled-components";
-import Button from "../../components/Button";
 import ButtonGroup from "../../components/ButtonGroup";
-import { useUserLogin } from "../../service/users/useUserService";
-import { FormGroup } from "./index";
-import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
+import React, { useRef } from "react";
+import { FormGroup } from "../AuthPage";
+import styled from "styled-components";
 import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
-import { loginUser } from "../../module/atom";
+  useUserLogin,
+  useUserSignUp,
+} from "../../service/users/useUserService";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
 
 interface input {
@@ -30,16 +18,9 @@ interface input {
 
 type refType = Partial<{ emailInput: input; passwordInput: input }>;
 
-function Login() {
-  const setLoginUser = useSetRecoilState(loginUser);
-
+function Signup() {
   const navigator = useNavigate();
   const inputGroupRef = useRef<refType>({});
-  const [isActive, setActive] = useState(false);
-
-  function onSetUserEmail(value: string) {
-    setLoginUser({ userEmail: value });
-  }
 
   function setInputRef(type: "emailInput" | "passwordInput") {
     return (ref: HTMLInputElement | null, isValid?: boolean) => {
@@ -53,22 +34,12 @@ function Login() {
           },
         },
       };
-      onSetActive();
     };
   }
 
-  function onSetActive() {
-    if (
-      !inputGroupRef?.current?.emailInput?.error &&
-      !inputGroupRef?.current?.passwordInput?.error
-    ) {
-      setActive(true);
-    } else {
-      setActive(false);
-    }
-  }
+  const fetchSignUpMutation = useUserSignUp();
 
-  const fetchLoginMutation = useUserLogin();
+  const toast = useToast();
 
   function onSubmit() {
     const { emailInput, passwordInput } = inputGroupRef.current;
@@ -76,26 +47,21 @@ function Login() {
     const email = emailInput?.value || "";
     const password = passwordInput?.value || "";
 
-    const toast = useToast();
-
-    fetchLoginMutation.mutate(
+    fetchSignUpMutation.mutate(
       { email, password },
       {
-        onSuccess(res) {
-          console.log("결과", res);
-          localStorage.setItem("authToken", res.token);
-          onSetUserEmail(email);
-          toast("로그인 성공", { type: "success" });
+        onSuccess() {
+          toast("회원가입 성공", { type: "success" });
         },
         onError() {
-          toast("로그인 실패", { type: "error" });
+          toast("회원가입 실패", { type: "error" });
         },
       }
     );
   }
 
   return (
-    <LoginSection>
+    <SignUpSection>
       <FormGroup>
         <TextInput
           id={"id-input"}
@@ -117,33 +83,22 @@ function Login() {
           onChange={setInputRef("passwordInput")}
         />
         <ButtonGroup align="right">
-          <Button
-            disabled={!isActive}
-            styleType={"secondary"}
-            onClick={onSubmit}
-          >
-            로그인
+          <Button styleType={"light"} onClick={() => navigator(-1)}>
+            취소
           </Button>
-          <Button styleType={"primary"} onClick={() => navigator("/signup")}>
+          <Button styleType={"primary"} onClick={onSubmit}>
             회원 가입
           </Button>
         </ButtonGroup>
-        <MoveToHomeBtn styleType="light" onClick={() => navigator("/")}>
-          홈으로 이동
-        </MoveToHomeBtn>
       </FormGroup>
-    </LoginSection>
+    </SignUpSection>
   );
 }
 
-const LoginSection = styled.section`
+const SignUpSection = styled.section`
   display: flex;
   width: 400px;
   margin: 0 auto;
 `;
 
-const MoveToHomeBtn = styled(Button)`
-  margin-top: 10px;
-`;
-
-export default Login;
+export default Signup;

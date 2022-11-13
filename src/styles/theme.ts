@@ -1,0 +1,88 @@
+const dsColors = {
+  gray900: "#121619",
+  gray800: "#21272A",
+  gray700: "#343A3F",
+  gray600: "#4C545B",
+  gray500: "#69717A",
+  gray400: "#868E96",
+  gray300: "#ADB5BD",
+  gray200: "#CFD5DB",
+  gray100: "#E9ECEF",
+  gray075: "#F0F2F4",
+  gray050: "#F7F8F9",
+
+  purple800: "#391470",
+  purple700: "#4C1D93",
+  purple600: "#6626C5",
+  purple500: "#7620F6",
+  purple400: "#8B5CF6",
+  purple300: "#A78BFA",
+  purple200: "#C4B5FD",
+  purple100: "#E1DAFF",
+  purple050: "#F1F0FF",
+
+  blue800: "#1F2E8F",
+  blue700: "#2B3EB4",
+  blue600: "#3A50D8",
+  blue500: "#4B62F3",
+  blue400: "#8292F6",
+  blue300: "#A5B4FC",
+  blue200: "#C7D2FE",
+  blue100: "#E0E7FF",
+  blue050: "#EEF2FF",
+
+  red800: "#831218",
+  red700: "#A2191F",
+  red600: "#DA1E28",
+  red500: "#FA4D56",
+  red400: "#FF8389",
+  red300: "#FFB3B8",
+  red200: "#FECACA",
+  red100: "#FEE2E2",
+  red050: "#FEF2F2",
+
+  green800: "#064E3B",
+  green700: "#047857",
+  green600: "#059669",
+  green500: "#10B981",
+  green400: "#34D399",
+  green300: "#6EE7B7",
+  green200: "#A7F3D0",
+  green100: "#D1FAE5",
+  green050: "#E9FBF4",
+
+  yellow800: "#78350F",
+  yellow700: "#B45309",
+  yellow600: "#D97706",
+  yellow500: "#F59E0B",
+  yellow400: "#FABE23",
+  yellow300: "#FCD34D",
+  yellow200: "#FDE68A",
+  yellow100: "#FEF3C7",
+  yellow050: "#FFF9E8",
+};
+
+export const theme = {
+  colors: {
+    ...dsColors,
+
+    primary: dsColors.purple500,
+    primaryLight: dsColors.purple200,
+    primaryDark: dsColors.purple800,
+
+    secondary: dsColors.gray500,
+    secondaryLight: dsColors.gray200,
+    secondaryDark: dsColors.gray800,
+
+    error: dsColors.red500,
+    errorLight: dsColors.red100,
+    errorDark: dsColors.red800,
+
+    gray: dsColors.gray600,
+    grayLight: dsColors.gray300,
+    grayDark: dsColors.gray800,
+
+    borderColor: dsColors.gray200,
+    textColor: dsColors.gray600,
+  },
+};

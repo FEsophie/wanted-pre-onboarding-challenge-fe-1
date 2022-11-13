@@ -5,10 +5,20 @@ interface ButtonGroupProps {
   children: React.ReactNode;
   align?: "center" | "left" | "right";
   type?: "inline" | "block";
+  className?: string;
 }
 
-function ButtonGroup({ children, align = "center", type }: ButtonGroupProps) {
-  return <ButtonGroupContainer align={align}>{children}</ButtonGroupContainer>;
+function ButtonGroup({
+  children,
+  align = "center",
+  className = "",
+  type,
+}: ButtonGroupProps) {
+  return (
+    <ButtonGroupContainer className={className} align={align}>
+      {children}
+    </ButtonGroupContainer>
+  );
 }
 
 const ButtonGroupContainer = styled.div<Pick<ButtonGroupProps, "align">>`

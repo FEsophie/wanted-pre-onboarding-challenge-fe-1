@@ -82,6 +82,7 @@ function TextInput({
           ref={textRef}
           onChange={(e) => {
             setTextValue(e.target.value);
+            onChange?.(e.target.value);
           }}
           onFocus={onFocus}
         />

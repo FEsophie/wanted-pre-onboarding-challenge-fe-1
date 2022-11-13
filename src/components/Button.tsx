@@ -13,6 +13,7 @@ interface ButtonProps {
   url?: string;
   children: React.ReactNode;
   disabled?: boolean;
+  className?: string;
 }
 
 function Button(props: ButtonProps) {
@@ -25,19 +26,19 @@ function Button(props: ButtonProps) {
     children,
     isFilled = true,
     disabled,
+    className,
   } = props;
 
   const uuid = id ? id : Utils.uuidV4();
 
   if (type === "button") {
-    console.log(disabled);
     return (
       <StyledButton
         id={uuid}
         disabled={disabled}
         className={`btn  ${
           isFilled ? `btn-${styleType}` : `btn-outline-${styleType}`
-        } btn-${size} ${disabled ? "btn-disabled" : ""}`}
+        } btn-${size} ${disabled ? "btn-disabled" : ""} ${className}`}
         onClick={(e) => {
           e.preventDefault();
           onClick?.();
@@ -61,6 +62,7 @@ function LinkButton(props: ButtonProps) {
     url = "/",
     children,
     isFilled = true,
+    className,
   } = props;
 
   return (
@@ -69,7 +71,7 @@ function LinkButton(props: ButtonProps) {
       to={url}
       className={`btn  ${
         isFilled ? `btn-${styleType}` : `btn-outline-${styleType}`
-      } btn-${size}`}
+      } btn-${size} ${className}`}
     >
       {children}
     </StyledLinkBtn>
