@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-    useCreateTodoItem,
-    useGetTodoItemById,
-    useUpdateTodoItem,
+  useCreateTodoItem,
+  useGetTodoItemById,
+  useUpdateTodoItem,
 } from "../../service/todos/useTodoService";
 import { useToast } from "../../hooks/useToast";
 import isEmpty from "lodash/isEmpty";
@@ -11,125 +11,123 @@ import Button from "../../components/Button";
 import styled from "styled-components";
 
 interface UpdateTodoItemModalProps {
-    id: string;
-    show: boolean;
-    onClose: () => void;
-    onLoadTodoItem: () => void;
-    title: string;
-    content: string;
+  id: string;
+  show: boolean;
+  onClose: () => void;
+  onLoadTodoItem: () => void;
+  title: string;
+  content: string;
 }
 
 function UpdateTodoItemModal({
-                                 id,
-                                 show,
-                                 onClose,
-                                 onLoadTodoItem,
-                                 content,
-                                 title,
-                             }: UpdateTodoItemModalProps) {
-    const [formData, setFormData] = useState({
-        title: title || "",
-        content: content || "",
+  id,
+  show,
+  onClose,
+  onLoadTodoItem,
+  content,
+  title,
+}: UpdateTodoItemModalProps) {
+  const [formData, setFormData] = useState({
+    title: title || "",
+    content: content || "",
+  });
+
+  const updateTodoMutation = useUpdateTodoItem(id);
+
+  const toast = useToast();
+
+  function onSetFormData(type: string) {
+    return (v: string) => {
+      setFormData((prev) => ({
+        ...prev,
+        [type]: v,
+      }));
+    };
+  }
+
+  function onUpdateTodoItem() {
+    if (isEmpty(formData["title"])) {
+      alert("제목을 입력해주세요");
+      return;
+    }
+
+    if (isEmpty(formData["content"])) {
+      alert("제목을 입력해주세요");
+      return;
+    }
+
+    updateTodoMutation.mutate(formData, {
+      onSuccess() {
+        toast("할일을 수정하였습니다.", { type: "success" });
+        onClose();
+        onLoadTodoItem();
+      },
+      onError() {
+        toast("예기치 못한 에러로 할 일을 수정할 수 없습니다.", {
+          type: "error",
+        });
+      },
+    });
+  }
+
+  useEffect(() => {
+    setFormData({
+      title: title,
+      content: content,
     });
 
-    const updateTodoMutation = useUpdateTodoItem(id);
+    return () => {
+      setFormData({
+        title: "",
+        content: "",
+      });
+    };
+  }, [show, title, content]);
 
-    const toast = useToast();
+  return (
+    <>
+      {show && (
+        <UpdateTodoItemModalContainer>
+          <UpdateTodoItemModalDimmed></UpdateTodoItemModalDimmed>
+          <UpdateTodoItemModalBody>
+            <div>
+              <h4>Update Todo Item</h4>
+              <TextInput
+                type="text"
+                text={"제목"}
+                value={formData["title"]}
+                onChange={onSetFormData("title")}
+              />
+              <TextArea
+                value={formData["content"]}
+                onChange={(e) => onSetFormData("content")(e.target.value)}
+              >
+                {formData["content"]}
+              </TextArea>
 
-    function onSetFormData(type: string) {
-        return (v: string) => {
-            setFormData((prev) => ({
-                ...prev,
-                [type]: v,
-            }));
-        };
-    }
-
-    function onUpdateTodoItem() {
-        if (isEmpty(formData["title"])) {
-            alert("제목을 입력해주세요");
-            return;
-        }
-
-        if (isEmpty(formData["content"])) {
-            alert("제목을 입력해주세요");
-            return;
-        }
-
-        updateTodoMutation.mutate(formData, {
-            onSuccess() {
-                toast("할일을 수정하였습니다.", { type: "success" });
-                onClose();
-                onLoadTodoItem();
-            },
-            onError() {
-                toast("예기치 못한 에러로 할 일을 수정할 수 없습니다.", {
-                    type: "error",
-                });
-            },
-        });
-    }
-
-    useEffect(() => {
-        setFormData({
-            title: title,
-            content: content,
-        });
-
-        console.log(formData);
-
-        return () => {
-            setFormData({
-                title: "",
-                content: "",
-            });
-        };
-    }, [show, title, content]);
-
-    return (
-        <>
-            {show && (
-                <UpdateTodoItemModalContainer>
-                    <UpdateTodoItemModalDimmed></UpdateTodoItemModalDimmed>
-                    <UpdateTodoItemModalBody>
-                        <div>
-                            <h4>Update Todo Item</h4>
-                            <TextInput
-                                type="text"
-                                text={"제목"}
-                                value={formData["title"]}
-                                onChange={onSetFormData("title")}
-                            />
-                            <TextArea
-                                value={formData["content"]}
-                                onChange={(e) => onSetFormData("content")(e.target.value)}
-                            >
-                                {formData["content"]}
-                            </TextArea>
-
-                            <div className="modify-btn-group">
-                                <Button
-                                    className={"cancel-btn"}
-                                    type={"button"}
-                                    styleType={"light"}
-                                    onClick={onClose}
-                                >
-                                    취소
-                                </Button>
-                                <Button
-                                    type={"button"}
-                                    styleType={"secondary"}
-                                    onClick={onUpdateTodoItem}
-                                >
-                                    수정
-                                </Button>
-                            </div>
-                        </div>
-                    </UpdateTodoItemModalBody>
-                </UpdateTodoItemModalContainer>
-            )}
-        </>
-    );
+              <div className="modify-btn-group">
+                <Button
+                  className={"cancel-btn"}
+                  type={"button"}
+                  styleType={"light"}
+                  onClick={onClose}
+                >
+                  취소
+                </Button>
+                <Button
+                  type={"button"}
+                  styleType={"secondary"}
+                  onClick={onUpdateTodoItem}
+                >
+                  수정
+                </Button>
+              </div>
+            </div>
+          </UpdateTodoItemModalBody>
+        </UpdateTodoItemModalContainer>
+      )}
+    </>
+  );
 }
 
 const UpdateTodoItemModalContainer = styled.div`

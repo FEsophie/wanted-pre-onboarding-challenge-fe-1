@@ -206,7 +206,6 @@ function TodoItemCont({ data }: { data: TodoItemProps }) {
         });
     }
 
-    console.log(data);
     return (
         <TodoItemContent>
             {isModifyMode ? (
