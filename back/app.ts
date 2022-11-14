@@ -6,8 +6,8 @@ import { StatusCodes } from "http-status-codes";
 
 import bodyParser from "body-parser";
 
-import todoRouter from "../../wanted-pre-onboarding-challenge-fe-1-api/routes/todoRouter";
-import userRouter from "../../wanted-pre-onboarding-challenge-fe-1-api/routes/userRouter";
+import todoRouter from "./routes/todoRouter";
+import userRouter from "./routes/userRouter";
 
 const app = express();
 
