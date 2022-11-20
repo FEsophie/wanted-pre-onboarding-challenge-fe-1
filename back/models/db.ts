@@ -42,7 +42,7 @@ export const createConnection = async () => {
   // Read data from JSON file, this will set db.data content
   await db.read();
 
-  db.data = { todos: [], users: [] };
+  db.data ||= { todos: [], users: [] };
   // Write db.data content to db.json
   await db.write();
 };
