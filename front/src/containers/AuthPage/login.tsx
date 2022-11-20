@@ -78,7 +78,6 @@ function Login() {
             { email, password },
             {
                 onSuccess(res) {
-                    console.log("결과", res);
                     localStorage.setItem("authToken", res.token);
                     onSetUserEmail(email);
                     toast("로그인 성공", { type: "success" });

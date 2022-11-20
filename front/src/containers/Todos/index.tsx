@@ -5,242 +5,228 @@ import { useLocation, useNavigate } from "react-router-dom";
 import queryString from "query-string";
 import ButtonGroup from "../../components/ButtonGroup";
 import {
-    useDeleteTodoItem,
-    useGetTodoList,
+  useDeleteTodoItem,
+  useGetTodoList,
 } from "../../service/todos/useTodoService";
 import { GetTodoRes } from "../../service/todos/types";
 import UpdateTodoItemModal from "./UpdateTodoModal";
 import AddTodoItemModal from "./AddTodoModal";
 import isNil from "lodash/isNil";
-import toast from "../../components/Toast";
 import { useToast } from "../../hooks/useToast";
+import Utils from "../../utils";
 
 const TODO_LIST_COLUMN = {
-    check: <input type={"checkbox"} />,
-    title: "제목",
-    createdAt: "생성 날짜",
-    updatedAt: "수정일자",
+  check: <input type={"checkbox"} />,
+  title: "제목",
+  createdAt: "생성 날짜",
+  updatedAt: "수정일자",
 } as Record<string, any>;
 
-const tempData = [
-    {
-        title: "hi",
-        content: "hello",
-        id: "z3FGrcRL55qDCFnP4KRtn",
-        createdAt: "2022-07-24T14:15:55.537Z",
-        updatedAt: "2022-07-24T14:15:55.537Z",
-    },
-    {
-        title: "ho",
-        content: "hollo",
-        id: "z3FGrcRL55qDCFnP3KRtn",
-        createdAt: "2022-07-24T14:15:55.537Z",
-        updatedAt: "2022-07-24T14:15:55.537Z",
-    },
-];
-
 function Todos() {
-    const [showAddTodoModal, setShowAddTodoModal] = useState(false);
-    const [todoData, setTodoData] = useState<GetTodoRes[] | null>(tempData);
-    const { data, isSuccess, isLoading, refetch } = useGetTodoList();
+  const [showAddTodoModal, setShowAddTodoModal] = useState(false);
+  const [todoData, setTodoData] = useState<GetTodoRes[] | null>(null);
+  const { data, isSuccess, isLoading, refetch } = useGetTodoList();
 
-    function onClickAddTodoItem() {
-        setShowAddTodoModal(true);
+  function onClickAddTodoItem() {
+    setShowAddTodoModal(true);
+  }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTodoData(data);
     }
+  }, [isSuccess, data]);
 
-    useEffect(() => {
-        if (isSuccess) {
-            setTodoData(data);
-        }
-    }, [isSuccess]);
-
-    return (
-        <>
-            <TodoListContainer>
-                <h3>Todo List</h3>
-                <TodoList>
-                    <TodoListHead />
-                    {isLoading && isNil(todoData) ? (
-                        <li>불러오는 중....</li>
-                    ) : !isSuccess ? (
-                        <>
-                            {todoData?.map((data) => {
-                                return <TodoItem key={data.id} data={data} />;
-                            })}
-                        </>
-                    ) : (
-                        <li>조회된 데이터가 없습니다</li>
-                    )}
-                </TodoList>
-                <ButtonGroup className="todo-list-button-group" align={"right"}>
-                    <Button
-                        className={"add-button"}
-                        type="link"
-                        styleType="secondary"
-                        url={"/"}
-                    >
-                        홈으로
-                    </Button>
-                    <Button
-                        className={"add-button"}
-                        type="button"
-                        styleType="primary"
-                        onClick={onClickAddTodoItem}
-                    >
-                        +Todo
-                    </Button>
-                </ButtonGroup>
-            </TodoListContainer>
-            <AddTodoItemModal
-                show={showAddTodoModal}
-                onClose={() => setShowAddTodoModal(false)}
-                onLoadTodoList={refetch}
-            />
-        </>
-    );
+  return (
+    <>
+      <TodoListContainer>
+        <h3>Todo List</h3>
+        <TodoList>
+          <TodoListHead />
+          {isLoading && isNil(todoData) ? (
+            <li>불러오는 중....</li>
+          ) : isSuccess ? (
+            <>
+              {todoData?.map((data) => {
+                return <TodoItem key={data.id} data={data} />;
+              })}
+            </>
+          ) : (
+            <li>조회된 데이터가 없습니다</li>
+          )}
+        </TodoList>
+        <ButtonGroup className="todo-list-button-group" align={"right"}>
+          <Button
+            className={"add-button"}
+            type="link"
+            styleType="secondary"
+            url={"/"}
+          >
+            홈으로
+          </Button>
+          <Button
+            className={"add-button"}
+            type="button"
+            styleType="primary"
+            onClick={onClickAddTodoItem}
+          >
+            +Todo
+          </Button>
+        </ButtonGroup>
+      </TodoListContainer>
+      <AddTodoItemModal
+        show={showAddTodoModal}
+        onClose={() => setShowAddTodoModal(false)}
+        onLoadTodoList={refetch}
+      />
+    </>
+  );
 }
 
 function TodoListHead() {
-    return (
-        <li className="todo-head-wrp">
-            {Object.keys(TODO_LIST_COLUMN).map((key: string) => {
-                return (
-                    <span key={key} className={`todo-head todo-head-${key}`}>
+  return (
+    <li className="todo-head-wrp">
+      {Object.keys(TODO_LIST_COLUMN).map((key: string) => {
+        return (
+          <span key={key} className={`todo-head todo-head-${key}`}>
             {TODO_LIST_COLUMN[key]}
           </span>
-                );
-            })}
-        </li>
-    );
+        );
+      })}
+    </li>
+  );
 }
 
 interface TodoItemProps {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 function TodoItem({ data }: { data: TodoItemProps }) {
-    const { id, title, createdAt, updatedAt } = data;
-    const [showDetailContId, setShowDetailContId] = useState("");
-    const [showDetailCont, setShowDetailCont] = useState(false);
+  const { id, title, createdAt, updatedAt } = data;
+  const [showDetailContId, setShowDetailContId] = useState("");
+  const [showDetailCont, setShowDetailCont] = useState(false);
 
-    const navigator = useNavigate();
-    const location = useLocation();
+  const navigator = useNavigate();
+  const location = useLocation();
 
-    const detailViewId = useMemo(() => {
-        const search = location.search || "";
-        const query = queryString.parse(search);
+  const detailViewId = useMemo(() => {
+    const search = location.search || "";
+    const query = queryString.parse(search);
 
-        return query.detailViewId || "";
-    }, [location.search]);
+    return query.detailViewId || "";
+  }, [location.search]);
 
-    function onShowDetail(id: string) {
-        if (!showDetailCont) {
-            navigator(`/todos?detailViewId=${id}`);
-            setShowDetailContId(id);
-        } else {
-            navigator(`/todos`);
-            setShowDetailContId("");
-        }
-        setShowDetailCont(!showDetailCont);
+  function onShowDetail(id: string) {
+    if (!showDetailCont) {
+      navigator(`/todos?detailViewId=${id}`);
+      setShowDetailContId(id);
+    } else {
+      navigator(`/todos`);
+      setShowDetailContId("");
     }
+    setShowDetailCont(!showDetailCont);
+  }
 
-    useEffect(() => {
-        if (detailViewId) {
-            setShowDetailContId(detailViewId as string);
-        } else {
-            setShowDetailContId("");
-        }
-    }, [detailViewId]);
+  useEffect(() => {
+    if (detailViewId) {
+      setShowDetailContId(detailViewId as string);
+    } else {
+      setShowDetailContId("");
+    }
+  }, [detailViewId]);
 
-    return (
-        <>
-            <li className="todo-item" id={id}>
+  return (
+    <>
+      <li className="todo-item" id={id}>
         <span className="todo-item-check">
           <input type={"checkbox"} />
         </span>
-                <span
-                    className="todo-item-title"
-                    onClick={() => {
-                        onShowDetail(id);
-                    }}
-                >
+        <span
+          className="todo-item-title"
+          onClick={() => {
+            onShowDetail(id);
+          }}
+        >
           {title}
         </span>
-                <span className="todo-item-createdAt">{createdAt}</span>
-                <span className="todo-item-updatedAt">{updatedAt}</span>
-            </li>
-            {id === showDetailContId && <TodoItemCont data={data} />}
-        </>
-    );
+        <span className="todo-item-createdAt">
+          {Utils.dateFormat(createdAt)}
+        </span>
+        <span className="todo-item-updatedAt">
+          {Utils.dateFormat(updatedAt)}
+        </span>
+      </li>
+      {id === showDetailContId && <TodoItemCont data={data} />}
+    </>
+  );
 }
 
 function TodoItemCont({ data }: { data: TodoItemProps }) {
-    const { id, content, title } = data;
-    const [isModifyMode, setModifyMode] = useState(false);
-    const deleteTodoItemMutation = useDeleteTodoItem();
-    const { refetch } = useGetTodoList();
+  const { id, content, title } = data;
+  const [isModifyMode, setModifyMode] = useState(false);
+  const deleteTodoItemMutation = useDeleteTodoItem();
+  const { refetch } = useGetTodoList();
 
-    const toast = useToast();
+  const toast = useToast();
 
-    function onClickCancelBtn() {
-        setModifyMode(false);
-    }
+  function onClickCancelBtn() {
+    setModifyMode(false);
+  }
 
-    function onClickModifyBtn() {
-        setModifyMode(true);
-    }
+  function onClickModifyBtn() {
+    setModifyMode(true);
+  }
 
-    function onClickDeleteBtn() {
-        deleteTodoItemMutation.mutate(id, {
-            onSuccess() {
-                toast("삭제 성공", { type: "success" });
-                refetch();
-            },
-            onError() {
-                toast("삭제 실패", { type: "error" });
-            },
-        });
-    }
+  function onClickDeleteBtn() {
+    deleteTodoItemMutation.mutate(id, {
+      onSuccess() {
+        toast("삭제 성공", { type: "success" });
+        refetch();
+      },
+      onError() {
+        toast("삭제 실패", { type: "error" });
+      },
+    });
+  }
 
-    console.log(data);
-    return (
-        <TodoItemContent>
-            {isModifyMode ? (
-                <UpdateTodoItemModal
-                    show={isModifyMode}
-                    onClose={onClickCancelBtn}
-                    onLoadTodoItem={refetch}
-                    title={title}
-                    id={id}
-                    content={content}
-                />
-            ) : (
-                <>
-                    <p>{content}</p>
-                    <div className="modify-btn-group">
-                        <Button
-                            type={"button"}
-                            styleType={"secondary"}
-                            onClick={onClickModifyBtn}
-                        >
-                            수정
-                        </Button>
-                        <Button
-                            type={"button"}
-                            styleType={"dark"}
-                            onClick={onClickDeleteBtn}
-                        >
-                            삭제
-                        </Button>
-                    </div>
-                </>
-            )}
-        </TodoItemContent>
-    );
+  return (
+    <TodoItemContent>
+      {isModifyMode ? (
+        <UpdateTodoItemModal
+          show={isModifyMode}
+          onClose={onClickCancelBtn}
+          onLoadTodoItem={refetch}
+          title={title}
+          id={id}
+          content={content}
+        />
+      ) : (
+        <>
+          <p>{content}</p>
+          <div className="modify-btn-group">
+            <Button
+              type={"button"}
+              styleType={"secondary"}
+              onClick={onClickModifyBtn}
+            >
+              수정
+            </Button>
+            <Button
+              type={"button"}
+              styleType={"dark"}
+              onClick={onClickDeleteBtn}
+            >
+              삭제
+            </Button>
+          </div>
+        </>
+      )}
+    </TodoItemContent>
+  );
 }
 
 const TodoList = styled.ul`
@@ -287,6 +273,7 @@ const TodoList = styled.ul`
 
     &-title {
       width: 50%;
+      cursor: pointer;
     }
 
     &-createdAt {
