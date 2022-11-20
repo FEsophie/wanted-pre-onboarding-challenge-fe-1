@@ -5,108 +5,108 @@ import isEmpty from "lodash/isEmpty";
 import TextInput from "../../components/TextInput";
 import Button from "../../components/Button";
 import styled from "styled-components";
+import TextArea from "../../components/TextArea";
 
 interface AddTodoItemModalProps {
-    show: boolean;
-    onClose: () => void;
-    onLoadTodoList: () => void;
+  show: boolean;
+  onClose: () => void;
+  onLoadTodoList: () => void;
 }
 
 function AddTodoItemModal({
-                              show,
-                              onClose,
-                              onLoadTodoList,
-                          }: AddTodoItemModalProps) {
-    const [formData, setFormData] = useState({
+  show,
+  onClose,
+  onLoadTodoList,
+}: AddTodoItemModalProps) {
+  const [formData, setFormData] = useState({
+    title: "",
+    content: "",
+  });
+
+  const addTodoMutation = useCreateTodoItem();
+
+  const toast = useToast();
+
+  function onSetFormData(type: string) {
+    return (v: string) => {
+      setFormData((prev) => ({
+        ...prev,
+        [type]: v,
+      }));
+    };
+  }
+
+  function onAddTodoItem() {
+    if (isEmpty(formData["title"])) {
+      alert("제목을 입력해주세요");
+      return;
+    }
+
+    if (isEmpty(formData["content"])) {
+      alert("제목을 입력해주세요");
+      return;
+    }
+
+    addTodoMutation.mutate(formData, {
+      onSuccess() {
+        toast("할일을 추가하였습니다.", { type: "success" });
+        onClose();
+        onLoadTodoList();
+      },
+      onError() {
+        toast("예기치 못한 에러로 할 일을 추가할 수 없습니다.", {
+          type: "error",
+        });
+      },
+    });
+  }
+
+  useEffect(() => {
+    return () => {
+      setFormData({
         title: "",
         content: "",
-    });
+      });
+    };
+  }, [show]);
 
-    const addTodoMutation = useCreateTodoItem();
-
-    const toast = useToast();
-
-    function onSetFormData(type: string) {
-        return (v: string) => {
-            setFormData((prev) => ({
-                ...prev,
-                [type]: v,
-            }));
-        };
-    }
-
-    function onAddTodoItem() {
-        if (isEmpty(formData["title"])) {
-            alert("제목을 입력해주세요");
-            return;
-        }
-
-        if (isEmpty(formData["content"])) {
-            alert("제목을 입력해주세요");
-            return;
-        }
-
-        addTodoMutation.mutate(formData, {
-            onSuccess() {
-                toast("할일을 추가하였습니다.", { type: "success" });
-                onClose();
-                onLoadTodoList();
-            },
-            onError() {
-                toast("예기치 못한 에러로 할 일을 추가할 수 없습니다.", {
-                    type: "error",
-                });
-            },
-        });
-    }
-
-    useEffect(() => {
-        return () => {
-            setFormData({
-                title: "",
-                content: "",
-            });
-        };
-    }, [show]);
-
-    return (
-        <>
-            {show && (
-                <AddTodoItemModalContainer>
-                    <AddTodoItemModalDimmed></AddTodoItemModalDimmed>
-                    <AddTodoItemModalBody>
-                        <div>
-                            <h4>Add Todo Item</h4>
-                            <TextInput
-                                type="text"
-                                text={"제목"}
-                                value={formData["title"]}
-                                onChange={onSetFormData("title")}
-                            />
-                            <TextArea
-                                onChange={(e) => onSetFormData("content")(e.target.value)}
-                            >
-                                {formData["content"]}
-                            </TextArea>
-
-                            <div className={"add-todo-modal-group"}>
-                                <Button type={"button"} styleType={"dark"} onClick={onClose}>
-                                    취소
-                                </Button>
-                                <Button
-                                    type={"button"}
-                                    styleType={"primary"}
-                                    onClick={onAddTodoItem}
-                                >
-                                    추가
-                                </Button>
-                            </div>
-                        </div>
-                    </AddTodoItemModalBody>
-                </AddTodoItemModalContainer>
-            )}
-        </>
-    );
+  // @ts-ignore
+  return (
+    <>
+      {show && (
+        <AddTodoItemModalContainer>
+          <AddTodoItemModalDimmed></AddTodoItemModalDimmed>
+          <AddTodoItemModalBody>
+            <div>
+              <h4>Add Todo Item</h4>
+              <TextInput
+                type="text"
+                text={"제목"}
+                value={formData["title"]}
+                onChange={onSetFormData("title")}
+              />
+              <CustomTextArea
+                value={formData["content"]}
+                onChange={onSetFormData("content")}
+              />
+              <div className={"add-todo-modal-group"}>
+                <Button type={"button"} styleType={"dark"} onClick={onClose}>
+                  취소
+                </Button>
+                <Button
+                  type={"button"}
+                  styleType={"primary"}
+                  onClick={onAddTodoItem}
+                >
+                  추가
+                </Button>
+              </div>
+            </div>
+          </AddTodoItemModalBody>
+        </AddTodoItemModalContainer>
+      )}
+    </>
+  );
 }
 
 const AddTodoItemModalContainer = styled.div`
@@ -149,7 +149,7 @@ const AddTodoItemModalBody = styled.div`
   }
 `;
 
-const TextArea = styled.textarea`
+const CustomTextArea = styled(TextArea)`
   width: 90%;
   height: 160px;
   display: block;
