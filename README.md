@@ -141,84 +141,84 @@ package.json
 
 # 이슈
 
-### react-router-dom 버전 업그레이드
+- ### react-router-dom 버전 업그레이드
 
-[https://reactrouter.com/en/main](https://reactrouter.com/en/main) 문서 참고
+	[https://reactrouter.com/en/main](https://reactrouter.com/en/main) 문서 참고
 
-**React Router Dom이 v6로 업그레이드 되면서 평소처럼 작성했던 문법들에 에러가 발생하는것을 알게되었다.**
+	**React Router Dom이 v6로 업그레이드 되면서 평소처럼 작성했던 문법들에 에러가 발생하는것을 알게되었다.**
 
-React Router Dom의 버전이 V6로 변경되면서 이전에 사용되던 Hooks나 기능들이 변경되었기 때문!
+	React Router Dom의 버전이 V6로 변경되면서 이전에 사용되던 Hooks나 기능들이 변경되었기 때문!
 
-변경된 부분에서 내가 참고했던 몇가지들을 정리해보았음
+	변경된 부분에서 내가 참고했던 몇가지들을 정리해보았음
 
-<aside>
-💡
+	<aside>
+	💡
 
-- <Route /> 컴포넌트 여러개를 감싸는 부모 컴포넌트의 네이밍이 ****Switch 에서 Routes로**** 변경됨
-- ****exact 옵션 삭제되고 매칭되는 컴포넌트를 알아서 보여줌
-(****다만 하위 페이지가 있다면 부모 Route에 '/*' 을 추가해줘야 함)
-- ****<Route />에서 컴포넌트 렌더링시 element props 사용****
-- ****history, useHistory의 기능이 useNavigate로 통합됨****
-- **path에 부모 경로까지 적을 필요 없이 파라미터만 적으면 됨**
-- ****withRouter, useRouteMatch, match 기능 사라짐****
+	- <Route /> 컴포넌트 여러개를 감싸는 부모 컴포넌트의 네이밍이 ****Switch 에서 Routes로**** 변경됨
+	- ****exact 옵션 삭제되고 매칭되는 컴포넌트를 알아서 보여줌
+	(****다만 하위 페이지가 있다면 부모 Route에 '/*' 을 추가해줘야 함)
+	- ****<Route />에서 컴포넌트 렌더링시 element props 사용****
+	- ****history, useHistory의 기능이 useNavigate로 통합됨****
+	- **path에 부모 경로까지 적을 필요 없이 파라미터만 적으면 됨**
+	- ****withRouter, useRouteMatch, match 기능 사라짐****
 
-</aside>
+	</aside>
 
-### 백엔드 서버와 프론트를 연동하다가 생긴 이슈
+- ### 백엔드 서버와 프론트를 연동하다가 생긴 이슈
 
-백엔드 서버를 클라이언트에 연결하는 과정에서 에러가 발생
+	백엔드 서버를 클라이언트에 연결하는 과정에서 에러가 발생
 
-- 에러 메세지 화면
+	- 에러 메세지 화면
 
-<img width="899" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 43 26" src="https://user-images.githubusercontent.com/99181656/206882114-94e7886d-9e32-4348-9433-dea26e69380b.png">
+	<img width="899" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 43 26" src="https://user-images.githubusercontent.com/99181656/206882114-94e7886d-9e32-4348-9433-dea26e69380b.png">
 
-- 에러를 확인할 때 ||=라는 잘못된 문자열이 들어가 있다는 것으로 이해하고 
-처음에 코드에서 해당 문자를 = 로 수정하였다.
-    
-<img width="435" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 46 48" src="https://user-images.githubusercontent.com/99181656/206882089-ba4ef15d-f094-464c-a6b0-6ed50b2e69b5.png">
+	- 에러를 확인할 때 ||=라는 잘못된 문자열이 들어가 있다는 것으로 이해하고 
+	처음에 코드에서 해당 문자를 = 로 수정하였다.
+
+	<img width="435" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 46 48" src="https://user-images.githubusercontent.com/99181656/206882089-ba4ef15d-f094-464c-a6b0-6ed50b2e69b5.png">
 
 
-<img width="900" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 48 23" src="https://user-images.githubusercontent.com/99181656/206882160-453286ee-050f-448a-9741-d4a7f9b992d4.png">
+	<img width="900" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 48 23" src="https://user-images.githubusercontent.com/99181656/206882160-453286ee-050f-448a-9741-d4a7f9b992d4.png">
 
-Now listening on port 8080메세지가 출력되었고 에러를 해결한 줄 알고 좋아했다…..
+	Now listening on port 8080메세지가 출력되었고 에러를 해결한 줄 알고 좋아했다…..
 
-서버 호출에서 계속해서 실패를 하는 것을 확인했고 코드에 문제가 있는것이 아니라 다른 원인이 있을거라 생각하고 프록시 설정도 다 해주었는데 계속해서 서버에서 에러가 나는 것을 해결할 수 없었고 다시 한번 맨 처음 발견한 에러 메세지를 살펴보다가 `at Loader.moduleStrategy` 부분이 눈에 들어왔다.
-바로 검색을 해보니 노드 버전을 16이상으로 올려야 한다는 글을 발견하게되었다. 드디어!!
+	서버 호출에서 계속해서 실패를 하는 것을 확인했고 코드에 문제가 있는것이 아니라 다른 원인이 있을거라 생각하고 프록시 설정도 다 해주었는데 계속해서 서버에서 에러가 나는 것을 해결할 수 없었고 다시 한번 맨 처음 발견한 에러 메세지를 살펴보다가 `at Loader.moduleStrategy` 부분이 눈에 들어왔다.
+	바로 검색을 해보니 노드 버전을 16이상으로 올려야 한다는 글을 발견하게되었다. 드디어!!
 
-<img width="900" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 57 31" src="https://user-images.githubusercontent.com/99181656/206882169-93a81351-cd44-43eb-9d52-eb18c8d421f9.png">
+	<img width="900" alt="%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA_2022-12-11_%E1%84%8B%E1%85%A9%E1%84%8C%E1%85%A5%E1%86%AB_2 57 31" src="https://user-images.githubusercontent.com/99181656/206882169-93a81351-cd44-43eb-9d52-eb18c8d421f9.png">
 
-[https://github.com/wechaty/getting-started/issues/204](https://github.com/wechaty/getting-started/issues/204)
+	[https://github.com/wechaty/getting-started/issues/204](https://github.com/wechaty/getting-started/issues/204)
 
-- Failed to load config "airbnb" to extend 에러=> npx install-peerdeps --dev eslint-config-airbnb 해결 ([스택오버플로우](https://stackoverflow.com/questions/69733256/failed-to-load-config-airbnb-to-extend-from-gitlab-ci))
+	- Failed to load config "airbnb" to extend 에러=> npx install-peerdeps --dev eslint-config-airbnb 해결 ([스택오버플로우](https://stackoverflow.com/questions/69733256/failed-to-load-config-airbnb-to-extend-from-gitlab-ci))
 
-### 타입스크립트 에러, 모듈을 설치했는데, 모듈을 찾을 수 없다고 나오는 이슈
+- ### 타입스크립트 에러, 모듈을 설치했는데, 모듈을 찾을 수 없다고 나오는 이슈
 
-이러한 이슈들은 패키지에 대한 타입을 설치해야하는데 설치 하지 않아서 발생하는 이슈였다.
-`npm i --save-dev @types/react-router-dom` 로 추가하여 타입스크립트 에러를 수정해주어 해결하였다. 이때 설치 후 **개발 서버를 다시 시작해야 에러가 사라진다는 것을 알 수 있었다.**
+	이러한 이슈들은 패키지에 대한 타입을 설치해야하는데 설치 하지 않아서 발생하는 이슈였다.
+	`npm i --save-dev @types/react-router-dom` 로 추가하여 타입스크립트 에러를 수정해주어 해결하였다. 이때 설치 후 **개발 서버를 다시 시작해야 에러가 사라진다는 것을 알 수 있었다.**
 
-- 에러메세지
-    
-    ```json
-    TS2307: Cannot find module 'react-router-dom' or its corresponding type declarations.
-        1 | import React from "react";
-        2 | import "./App.css";
-      > 3 | import { BrowserRouter, Route, Routes } from "react-router-dom";
-          |                                              ^^^^^^^^^^^^^^^^^^
-        4 | import MainPage from "./containers/MainPage";
-        5 | import Users from "./containers/AuthPage";
-        6 | import NotFound from "./containers/NotFound";
-    ```
-    
-- 에러가 나서 설치한 @types 목록
-    
-    ```
-    "@types/lodash": "^4.14.191",
-    "@types/react-router-dom": "^5.3.3",
-    "@types/styled-components": "^5.1.26",
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
-    ```
-    
+	- 에러메세지
+
+	    ```json
+	    TS2307: Cannot find module 'react-router-dom' or its corresponding type declarations.
+		1 | import React from "react";
+		2 | import "./App.css";
+	      > 3 | import { BrowserRouter, Route, Routes } from "react-router-dom";
+		  |                                              ^^^^^^^^^^^^^^^^^^
+		4 | import MainPage from "./containers/MainPage";
+		5 | import Users from "./containers/AuthPage";
+		6 | import NotFound from "./containers/NotFound";
+	    ```
+
+	- 에러가 나서 설치한 @types 목록
+
+	    ```
+	    "@types/lodash": "^4.14.191",
+	    "@types/react-router-dom": "^5.3.3",
+	    "@types/styled-components": "^5.1.26",
+	    "@typescript-eslint/eslint-plugin": "^5.46.0",
+	    "@typescript-eslint/parser": "^5.46.0",
+	    ```
+
 
 ## Assignment 1 - Login / SignUp
 
