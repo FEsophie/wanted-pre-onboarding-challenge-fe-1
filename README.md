@@ -1,7 +1,4 @@
-# wanted-pre-onboarding-challenge-fe-1
-
-
-# 리액트 쿼리 프로젝트
+# 리액트 쿼리 Todo구현 프로젝트
 
 # 기술스택
 
