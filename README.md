@@ -42,14 +42,14 @@ wanted-pre-onboarding-challenge-fe-1
 		├── utils //유틸 함수 관리
 		├── service // api 관리
 		├── public
-    ├── App.css
-    ├── App.tsx
-    ├── App.test.tsx
-    ├── index.css
-    ├── index.ts // 자바스크립트 진입점
-    ├── logo.svg
-    ├── serviceWorker.js
-    └── setupTests.js
+		    ├── App.css
+		    ├── App.tsx
+		    ├── App.test.tsx
+		    ├── index.css
+		    ├── index.ts // 자바스크립트 진입점
+		    ├── logo.svg
+		    ├── serviceWorker.js
+		    └── setupTests.js
 ```
 
 package.json
