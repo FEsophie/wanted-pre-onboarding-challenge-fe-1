@@ -189,7 +189,9 @@ package.json
 
 	[https://github.com/wechaty/getting-started/issues/204](https://github.com/wechaty/getting-started/issues/204)
 
-	- Failed to load config "airbnb" to extend 에러=> npx install-peerdeps --dev eslint-config-airbnb 해결 ([스택오버플로우](https://stackoverflow.com/questions/69733256/failed-to-load-config-airbnb-to-extend-from-gitlab-ci))
+- ### Failed to load config "airbnb" to extend 에러
+	npx install-peerdeps --dev eslint-config-airbnb 해결 
+	([스택오버플로우](https://stackoverflow.com/questions/69733256/failed-to-load-config-airbnb-to-extend-from-gitlab-ci))
 
 - ### 타입스크립트 에러, 모듈을 설치했는데, 모듈을 찾을 수 없다고 나오는 이슈
 
