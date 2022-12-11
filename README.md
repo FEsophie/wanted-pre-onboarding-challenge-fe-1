@@ -105,11 +105,11 @@ package.json
 - **`npm start` :** 개발 모드에서 앱을 실행합니다. 기본적으로 [http://localhost:3000](http://localhost:3000/) 로 브라우저에서 실행
 - **`npm test`:** 마지막 변경된 파일과 관련된 **테스트 감시자를 실행**
 - **`npm eject`: 자세한 리액트 앱의 구성 확인할 때 사용,** *Webpack, Babel, ESLint, etc. 숨겨져있는* 앱을 build하기 위한 모든 구성요소들을 한번에 볼 수 있음
-- **`npm run build`: 앱 배포 준비 /**프로덕션용 앱을 `build`폴더에 빌드함 / 프로덕션 모드에서 React를 올바르게 번들로 묶고 최상의 성능을 위해 빌드를 최적화시킴
+- **`npm run build`: 앱 배포 준비 ,**프로덕션용 앱을 `build`폴더에 빌드함 , 프로덕션 모드에서 React를 올바르게 번들로 묶고 최상의 성능을 위해 빌드를 최적화시킴
 
 설치 라이브러리
 
-- `eslint` + `prettier` + Typescript
+- `eslint` + `prettier` + `Typescript
     - npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
     - npm i -D prettier eslint-config-prettier eslint-plugin-prettier
 - `eslint-plugin-react`  리액트와 타입스크립트를 함께 사용하기 위해 설치
