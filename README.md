@@ -155,12 +155,12 @@ package.json
 	💡
 
 	- <Route /> 컴포넌트 여러개를 감싸는 부모 컴포넌트의 네이밍이 ****Switch 에서 Routes로**** 변경됨
-	- ****exact 옵션 삭제되고 매칭되는 컴포넌트를 알아서 보여줌
-	(****다만 하위 페이지가 있다면 부모 Route에 '/*' 을 추가해줘야 함)
-	- ****<Route />에서 컴포넌트 렌더링시 element props 사용****
-	- ****history, useHistory의 기능이 useNavigate로 통합됨****
+	- exact 옵션 삭제되고 매칭되는 컴포넌트를 알아서 보여줌
+	(다만 하위 페이지가 있다면 부모 Route에 '/*' 을 추가해줘야 함)
+	- **<Route />에서 컴포넌트 렌더링시 element props 사용****
+	- **history, useHistory의 기능이 useNavigate로 통합됨****
 	- **path에 부모 경로까지 적을 필요 없이 파라미터만 적으면 됨**
-	- ****withRouter, useRouteMatch, match 기능 사라짐****
+	- **withRouter, useRouteMatch, match 기능 사라짐****
 
 	</aside>
 
